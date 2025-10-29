@@ -1,0 +1,2 @@
+### initialise boids
+POST http://localhost:8080/api/boids/init?count=10
