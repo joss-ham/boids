@@ -1,2 +1,5 @@
 ### initialise boids
-POST http://localhost:8080/api/boids/init?count=10
+POST http://localhost:8080/api/boids/init
+Content-Type: application/json
+
+{ "count": 5 }

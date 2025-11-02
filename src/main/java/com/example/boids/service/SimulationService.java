@@ -1,5 +1,6 @@
 package com.example.boids.service;
 
+
 import com.example.boids.model.Boid;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,21 @@ public class SimulationService {
     }
 
     public List<Boid> step(){
+            for (Boid boid : boids){
+                double x = boid.getX();
+                x += boid.getVx();
+                double y = boid.getY();
+                y += boid.getVy();
+
+                //check in bounds
+                if(x < 0){x = width+x;}
+                if(x>width){x = width-x;};
+                if(y < 0){y = height+y;}
+                if(y > height){y =  height-y;};
+
+                boid.setX(x);
+                boid.setY(y);
+            }
         return boids;
     }
     public List<Boid> getState(){
