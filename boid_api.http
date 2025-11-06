@@ -2,4 +2,4 @@
 POST http://localhost:8080/api/boids/init
 Content-Type: application/json
 
-{ "count": 5 }
+{ "count": 1 }
