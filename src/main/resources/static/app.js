@@ -1,7 +1,13 @@
 let running = false
+console.log('running start')
+let canvas = document.getElementById('boidCanvas')
+let ctx = canvas.getContext('2d')
+let boids = []
+let intervalId = null;
 
 
 function draw(boids) {
+    console.log('drawing')
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const b of boids) {
         ctx.beginPath();
@@ -12,29 +18,37 @@ function draw(boids) {
 }
 
 async function initBoids(count) {
-    if (running === false) {
+    console.log('initBoids');
+
+    if (running === true) {
+        clearInterval(intervalId);
+        running = false;
+    }
 
         //makes backend create boid array
-        fetch('/api/boids/init', {
+        const res = await fetch('/api/boids/init', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({count: count})
         });
-        await res.json();
-        //store result in local boids variable
+
+        boids = await res.json();
+        draw(boids);
+
 //draw new boids every 50ms
-        setInterval(async () => {
+        intervalId = setInterval(async () => {
             const res = await fetch('/api/boids/step', {method: 'POST'});
-            const boids = await res.json();
+            boids = await res.json();
             draw(boids);
         }, 50);
 
         running = true;
-    }
+
 }
 
 //call init when button is pressed
 document.getElementById('initButton').addEventListener('click', () => {
-    const count = parseInt(document.getElementById('count').value);
+    console.log('click');
+    const count = parseInt(document.getElementById('boidCount').value);
     initBoids(count);
 });
