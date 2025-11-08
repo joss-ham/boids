@@ -50,5 +50,5 @@ async function initBoids(count) {
 document.getElementById('initButton').addEventListener('click', () => {
     console.log('click');
     const count = parseInt(document.getElementById('boidCount').value);
-    initBoids(count);
+    initBoids(count).then(r => boids);
 });
