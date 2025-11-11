@@ -10,10 +10,19 @@ function draw(boids) {
     console.log('drawing')
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     for (const b of boids) {
+        angle = Math.atan2(b.vy, b.vx);
+
+        ctx.save()
+        ctx.translate(b.x, b.y);
+        ctx.rotate(angle);
         ctx.beginPath();
-        ctx.arc(b.x, b.y, 3, 0, 2 * Math.PI);
+        ctx.moveTo(6, 0)
+        ctx.lineTo(-6, 3)
+        ctx.lineTo(-6, -3)
+        ctx.closePath();
         ctx.fillStyle = 'white';
         ctx.fill();
+        ctx.restore();
     }
 }
 
